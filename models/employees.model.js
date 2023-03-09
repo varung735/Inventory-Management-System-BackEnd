@@ -13,7 +13,7 @@ const employeesSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    aadhar_No: {
+    aadhar_no: {
         type: Number,
         require: true,
         minLength: [12, "Aadhar Number must be less than 12 digits."]
@@ -22,7 +22,7 @@ const employeesSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    ac_No: {
+    ac_no: {
         type: Number,
         require: true
     },
@@ -60,7 +60,7 @@ const employeesSchema = new mongoose.Schema({
     password: {
         type: String,
         require: true,
-        maxLength: [10, "Passwords must be of 10 characters."],
+        minLength: [10, "Passwords must be of 10 characters."],
         select: false
     },
     salary: [{

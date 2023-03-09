@@ -1,8 +1,10 @@
 const express = require('express');
 const employeesRouter = express.Router();
+const {auth} = require('../middlewares/auth');
 
-const { addEmployees } = require('../controllers/employees.controller');
+const { addEmployees, login } = require('../controllers/employees.controller');
 
-employeesRouter.post('/addEmployee', addEmployees);
+employeesRouter.get('/login', login);
+employeesRouter.post('/addEmployee', auth, addEmployees);
 
 module.exports = employeesRouter;
