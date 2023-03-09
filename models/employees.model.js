@@ -13,28 +13,28 @@ const employeesSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    Aadhar_No: {
+    aadhar_No: {
         type: Number,
         require: true,
         minLength: [12, "Aadhar Number must be less than 12 digits."]
     },
-    PAN_No: {
+    pan_no: {
         type: String,
         require: true
     },
-    Ac_No: {
+    ac_No: {
         type: Number,
         require: true
     },
-    Bank_Name: {
+    bank_name: {
         type: String,
         require: true
     },
-    IFSC_Code: {
+    ifsc_Code: {
         type: String,
         require: true
     },
-    Contact_No: {
+    contact_no: {
         type: Number,
         require: true,
         minLength: [10, "Contact No. must be of 10 digits"]
@@ -60,17 +60,18 @@ const employeesSchema = new mongoose.Schema({
     password: {
         type: String,
         require: true,
-        maxLength: [10, "Passwords must be of 10 characters."]
+        maxLength: [10, "Passwords must be of 10 characters."],
+        select: false
     },
     salary: [{
         paid_on: {
             type: Date,
             default: Date.now
         },
-        Amount: {
+        amount: {
             type: Number
         }
     }]
 });
 
-model.exports = mongoose.model('employees', employeesSchema);
+module.exports = mongoose.model('employees', employeesSchema);
