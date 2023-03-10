@@ -2,7 +2,6 @@ const empModel = require('../models/employees.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 // login
@@ -42,6 +41,26 @@ exports.login = async (req, res) => {
             "message": "cannot login",
             "error": error.message,
         });
+    }
+}
+
+//for getting all the employees
+exports.getEmployees = async (req, res) => {
+    try {
+        const employees = await empModel.find();
+
+        res.status(200).json({
+            "success": true,
+            "message": "got employees successfully",
+            "employees": employees
+        });
+    } catch (error) {
+        res.status(400).json({
+            "success": false,
+            "message": "Cannot get Employees",
+            "error": error.message
+        });
+        console.log(error);
     }
 }
 
@@ -110,7 +129,7 @@ exports.updateEmployees = async (req, res) => {
             res.status(401).send("Employee doesn't exists");
         }
 
-        const updatedEmployee = await empModel.findByIdAndUpdate(id);
+        const updatedEmployee = await empModel.findByIdAndUpdate(id, req.body, {new: true});
 
         res.status(200).json({
             "success": true,

@@ -35,4 +35,4 @@ const salesSchema = new ongoose.Schema({
     }
 });
 
-exports.model = mongoose.model('sales', salesSchema);
+module.exports = mongoose.model('sales', salesSchema);

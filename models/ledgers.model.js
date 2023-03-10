@@ -26,4 +26,4 @@ const ledgersSchema = new mongoose.Schema({
     }]
 });
 
-exports.model = mongoose.model('ledgers', ledgersSchema);
+module.exports = mongoose.model('ledgers', ledgersSchema);
