@@ -21,6 +21,7 @@ exports.auth = async (req,res,next) => {
             "message": "token invalid",
             "error": error.message
         });
+        console.log(error);
     }
 
     return next();
