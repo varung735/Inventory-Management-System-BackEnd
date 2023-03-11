@@ -1,37 +1,38 @@
 const mongoose = require('mongoose');
 
-const salesSchema = new ongoose.Schema({
+const salesSchema = new mongoose.Schema({
     product_name: {
         type: String,
-        require: [true, "product name is required"]
+        required: [true, "product name is required"]
     },
     type: {
         type: String,
-        require: [true, "type is required"]
+        required: [true, "type is required"]
     },
     selling_price: {
         type: Number,
-        require: [true, "selling_price is required."]
+        required: [true, "selling_price is required."]
     },
     sold_at: {
         type: Number,
-        require: [true, "sold_at is required"]
+        required: [true, "sold_at is required"]
     },
     units_sold: {
         type: Number,
-        require: [true, "units_sold is required"]
+        required: [true, "units_sold is required"]
     },
     unit: {
         type: String,
-        require: [true, "unit is required"]
+        required: [true, "unit is required"]
     },
     date: {
         type: String,
-        require: [true, "date is required"]
+        required: [true, "date is required"],
+        default: Date.now
     },
     added_by: {
         type: String,
-        require: [true, "added_by:emp_name is required"]
+        required: [true, "added_by:emp_name is required"]
     }
 });
 

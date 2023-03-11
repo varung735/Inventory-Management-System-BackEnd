@@ -7,6 +7,7 @@ const app = express();
 
 const employeesRouter = require('./routes/employees.routes');
 const inventoriesRouter = require('./routes/inventories.routes');
+const salesRouter = require('./routes/sales.routes');
 
 app.use(cors());
 app.options('*', cors());
@@ -18,5 +19,6 @@ connectToDB();
 
 app.use('/employees', employeesRouter);
 app.use('/inventories', inventoriesRouter);
+app.use('/sales', salesRouter);
 
 module.exports = app;

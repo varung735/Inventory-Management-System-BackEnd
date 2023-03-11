@@ -3,63 +3,63 @@ const mongoose = require('mongoose');
 const employeesSchema = new mongoose.Schema({
     emp_name: {
         type: String,
-        require: true
+        required: true
     },
     designation: {
         type: String,
-        require: true
+        required: true
     },
     address: {
         type: String,
-        require: true
+        required: true
     },
     aadhar_no: {
         type: Number,
-        require: true,
+        required: true,
         minLength: [12, "Aadhar Number must be less than 12 digits."]
     },
     pan_no: {
         type: String,
-        require: true
+        required: true
     },
     ac_no: {
         type: Number,
-        require: true
+        required: true
     },
     bank_name: {
         type: String,
-        require: true
+        required: true
     },
-    ifsc_Code: {
+    ifsc_code: {
         type: String,
-        require: true
+        required: true
     },
     contact_no: {
         type: Number,
-        require: true,
+        required: true,
         minLength: [10, "Contact No. must be of 10 digits"]
     },
     email: {
         type: String,
-        require: true,
+        required: true,
         unique: true
     },
     hired_on: {
         type: Date,
-        require: true,
+        required: true,
         default: Date.now
     },
     emp_status: {
         type: String,
-        require: true
+        required: true
     },
     role: {
         type: String,
-        require: true
+        required: true
     },
     password: {
         type: String,
-        require: true,
+        required: true,
         minLength: [10, "Passwords must be of 10 characters."],
         select: false
     },
