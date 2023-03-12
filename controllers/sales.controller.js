@@ -23,11 +23,11 @@ exports.getSales = async (req, res) => {
 //To add the sales into the DB
 exports.addSales = async (req, res) => {
     try {
-        let { product_name, type, selling_price, sold_at, units_sold, units, date, added_by } = req.body;
+        let { product_name, type, selling_price, sold_at, units_sold, unit, date, added_by } = req.body;
 
         // if any of the fields are missing
-        if (!(product_name && type && selling_price && sold_at && units_sold && units && date && added_by)) {
-            res.status(400).send("All Fields are required.");
+        if (!(product_name && type && selling_price && sold_at && units_sold && unit && date && added_by)) {
+            res.status(401).send("All Fields are required.");
         }
 
         //sending a create entry to DB
@@ -37,7 +37,7 @@ exports.addSales = async (req, res) => {
             selling_price,
             sold_at,
             units_sold,
-            units,
+            unit,
             date,
             added_by
         });
@@ -65,7 +65,7 @@ exports.updateSales = async (req, res) => {
         let id = req.params.id;
 
         //if sales entry doesn't exists
-        const sale = await salesModel.find(id);
+        const sale = await salesModel.find({id: id});
         if (!sale) {
             res.staus(400).json("Sale entry doesn't exists.");
         }
@@ -94,7 +94,7 @@ exports.deleteSales = async (req, res) => {
         let id = req.params.id;
 
         //checks if sales exists or not
-        const sale = await salesModel.find(id);
+        const sale = await salesModel.find({id: id});
         if(!sale){
             res.status(400).send("Sale Doesn't exists");
         }

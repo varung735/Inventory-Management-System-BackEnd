@@ -26,7 +26,7 @@ const salesSchema = new mongoose.Schema({
         required: [true, "unit is required"]
     },
     date: {
-        type: String,
+        type: Date,
         required: [true, "date is required"],
         default: Date.now
     },

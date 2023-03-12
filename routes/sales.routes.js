@@ -6,7 +6,7 @@ const { getSales, addSales, updateSales, deleteSales } = require('../controllers
 
 salesRouter.get('/getSales', auth, getSales);
 salesRouter.post('/addSales', auth, addSales);
-salesRouter.put('/updateSales', auth, updateSales);
-salesRouter.delete('/deleteSales', auth, deleteSales);
+salesRouter.put('/updateSales/:id', auth, updateSales);
+salesRouter.delete('/deleteSales/:id', auth, deleteSales);
 
 module.exports = salesRouter;
