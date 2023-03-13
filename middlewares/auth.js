@@ -14,8 +14,7 @@ exports.auth = async (req,res,next) => {
     try {
         const decodedToken = jwt.verify(token, JWT_SECRET_KEY);
         req.employee = decodedToken;
-
-        console.log(decodedToken);
+        
     } catch (error) {
         res.status(403).json({
             "message": "token invalid",

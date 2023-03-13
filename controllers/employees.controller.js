@@ -70,7 +70,7 @@ exports.addEmployees = async (req, res) => {
         let { emp_name, designation, address, aadhar_no, pan_no, ac_no, bank_name, ifsc_code, contact_no, email, hired_on, emp_status, role, password } = req.body;
 
         //if any of the fields are missing
-        if (emp_name && designation && address && aadhar_no && pan_no && ac_no && bank_name && ifsc_code && contact_no && email && hired_on && emp_status && role && password) {
+        if (!(emp_name && designation && address && aadhar_no && pan_no && ac_no && bank_name && ifsc_code && contact_no && email && hired_on && emp_status && role && password)) {
             res.status(400).send("All fields are required");
         }
 

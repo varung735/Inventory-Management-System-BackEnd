@@ -58,10 +58,56 @@ exports.addPurchases = async (req, res) => {
 
 //to update the purchase in DB
 exports.updatePurchases = async (req, res) => {
+    try {
+        let id = req.params.id;
 
+        //if purchase doesn't exists
+        const purchase = await purchasesModel.find({id: id});
+        if(!purchase){
+            res.status(400).send("Purchase doesn't exists");
+        }
+
+        const updatedPurchase = await purchasesModel.findByIdAndUpdate(id, req.body, {new: true});
+
+        res.status(200).json({
+            "success": true,
+            "message": "Updated Purchase Successfully",
+            "updatedPurchase": updatedPurchase
+        });
+    } catch (error) {
+        res.status(400).json({
+            "success": false,
+            "message": "Cannot Update Sales",
+            "error": error.message
+        });
+        console.log(error);
+    }
 }
 
 //to delete the purchase in DB
 exports.deletePurchases = async (req, res) => {
+    try {
+        let id = req.params.id;
 
+        //if purchase doesn't exists
+        const purchase = await purchasesModel.find({id: id});
+        if(!purchase){
+            res.status(400).send("Purchase doesn't exists");
+        }
+
+        const deletedPurchase = await purchasesModel.findByIdAndDelete(id);
+
+        res.status(200).json({
+            "success": true,
+            "message": "Deleted Purchase Successfully",
+            "Deleted Purchase": deletedPurchase
+        });
+    } catch (error) {
+        res.status().json({
+            "success": false,
+            "message": "Cannot Delete Purchase",
+            "error": error.message
+        });
+        console.log(error);
+    }
 }
