@@ -29,25 +29,27 @@ exports.addSales = async (req, res) => {
         if (!(product_name && type && selling_price && sold_at && units_sold && unit && date && added_by)) {
             res.status(401).send("All Fields are required.");
         }
+        else{
+            //sending a create entry to DB
+            const addedSale = await salesModel.create({
+                product_name,
+                type,
+                selling_price,
+                sold_at,
+                units_sold,
+                unit,
+                date,
+                added_by
+            });
 
-        //sending a create entry to DB
-        const addedSale = await salesModel.create({
-            product_name,
-            type,
-            selling_price,
-            sold_at,
-            units_sold,
-            unit,
-            date,
-            added_by
-        });
+            //response
+            res.status(200).json({
+                "success": true,
+                "message": "Added Sale Successfully",
+                "Sale": addedSale
+            });
+        }
 
-        //response
-        res.status(200).json({
-            "success": true,
-            "message": "Added Sale Successfully",
-            "Sale": addedSale
-        });
 
     } catch (error) {
         res.status(400).json({
@@ -69,15 +71,17 @@ exports.updateSales = async (req, res) => {
         if (!sale) {
             res.staus(400).json("Sale entry doesn't exists.");
         }
+        else{
+            //updating the entry in DB
+            const updatedSale = await salesModel.findByIdAndUpdate(id, req.body);
+    
+            res.status(200).json({
+                "success": true,
+                "message": "updated sale successfully",
+                "Updated sale": updatedSale
+            });
+        }
 
-        //updating the entry in DB
-        const updatedSale = await salesModel.findByIdAndUpdate(id, req.body);
-
-        res.status(200).json({
-            "success": true,
-            "message": "updated sale successfully",
-            "Updated sale": updatedSale
-        });
     } catch (error) {
         res.status(400).json({
             "success": false,
@@ -98,15 +102,17 @@ exports.deleteSales = async (req, res) => {
         if(!sale){
             res.status(400).send("Sale Doesn't exists");
         }
+        else{
+            //deleting the sale from DB
+            const deletedSale = await salesModel.findOneAndDelete(id);
+    
+            res.status(200).json({
+                "success": true,
+                "message": "Deleted Sales Successfully",
+                "deleted sale": deletedSale
+            });
+        }
 
-        //deleting the sale from DB
-        const deletedSale = await salesModel.findOneAndDelete(id);
-
-        res.status(200).json({
-            "success": true,
-            "message": "Deleted Sales Successfully",
-            "deleted sale": deletedSale
-        });
     } catch (error) {
         res.status(400).json({
             "success": false,

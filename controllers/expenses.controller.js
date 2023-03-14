@@ -24,20 +24,23 @@ exports.addExpenses = async (req, res) => {
         if(!(expense_name && type && paid_to && amount && added_by)){
             res.status(400).send("All Fields are required.");
         }
+        else{
+            //adding expense to DB
+            const addedExpense = await expensesModel.create({
+                expense_name,
+                type,
+                paid_to,
+                amount,
+                added_by
+            });
+    
+            res.status(200).json({
+                "success": true,
+                "message": "Added Expense Successfully",
+                "added_expense": addedExpense
+            });
+        }
 
-        const addedExpense = await expensesModel.create({
-            expense_name,
-            type,
-            paid_to,
-            amount,
-            added_by
-        });
-
-        res.status(200).json({
-            "success": true,
-            "message": "Added Expense Successfully",
-            "added_expense": addedExpense
-        });
     } catch (error) {
         res.status(400).json({
             "success": false,
@@ -58,14 +61,17 @@ exports.updateExpenses = async (req, res) => {
         if(!expense){
             res.status(400).send("Expense doesn't exists");
         }
+        else{
+            //updating expense in DB
+            const updatedExpense = await expensesModel.findByIdAndUpdate(id, req.body, {new: true});
+    
+            res.status(200).json({
+                "success": true,
+                "message": "Updated Expense Successfully",
+                "updated_expense": updatedExpense
+            });
+        }
 
-        const updatedExpense = await expensesModel.findByIdAndUpdate(id, req.body, {new: true});
-
-        res.status(200).json({
-            "success": true,
-            "message": "Updated Expense Successfully",
-            "updated_expense": updatedExpense
-        });
     } catch (error) {
         res.status(400).json({
             "success": false,
@@ -86,14 +92,17 @@ exports.deleteExpenses = async (req, res) => {
         if(!expense){
             res.status(400).send("Expense doesn't exists");
         }
-
-        const deletedExpense = await expensesModel.findByIdAndDelete(id);
-
-        res.status(200).json({
-            "success": false,
-            "message": "Expense Deleted Successfully",
-            "deleted_expense": deletedExpense
-        });
+        else{
+            //deleting expense in DB
+            const deletedExpense = await expensesModel.findByIdAndDelete(id);
+    
+            res.status(200).json({
+                "success": false,
+                "message": "Expense Deleted Successfully",
+                "deleted_expense": deletedExpense
+            });
+        }
+        
     } catch (error) {
         res.status(400).json({
             "success": false,

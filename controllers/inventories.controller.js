@@ -30,21 +30,22 @@ exports.addInventories = async (req, res) => {
         if (!(item_name && type && quantity && unit && added_by)) {
             res.status(401).send("All fields are required");
         }
-
-        //creating an entry in DB
-        const newInventory = await inventoryModel.create({
-            item_name,
-            type,
-            quantity,
-            unit,
-            added_by
-        });
-
-        res.status(200).json({
-            "success": true,
-            "message": "Inventory Created Successfully",
-            "Inventory": newInventory
-        });
+        else{
+            //creating an entry in DB
+            const newInventory = await inventoryModel.create({
+                item_name,
+                type,
+                quantity,
+                unit,
+                added_by
+            });
+    
+            res.status(200).json({
+                "success": true,
+                "message": "Inventory Created Successfully",
+                "Inventory": newInventory
+            });
+        }
 
     } catch (error) {
         res.status(400).json({
@@ -66,15 +67,17 @@ exports.updateInventories = async (req, res) => {
         if (!isExisting) {
             res.status(400).send("Inventory item doesn't exists");
         }
+        else{
+            //updating the collection in DB
+            const updatedInventory = await inventoriesModel.findByIdAndUpdate(id, req.body, {new: true});
+    
+            res.status(200).json({
+                "success": true,
+                "message": "updated inventory successfully",
+                "inventory": updatedInventory
+            });
+        }
 
-        //updating the collection in DB
-        const updatedInventory = await inventoriesModel.findByIdAndUpdate(id, req.body, {new: true});
-
-        res.status(200).json({
-            "success": true,
-            "message": "updated inventory successfully",
-            "inventory": updatedInventory
-        });
     } catch (error) {
         res.status(400).json({
             "success": false,
@@ -95,16 +98,18 @@ exports.deleteInventories = async (req, res) => {
         if (!isExisting) {
             res.status(401).send("Employee doesn't exists");
         }
-        
-        const deletedInventory = await inventoriesModel.findByIdAndDelete(id);
+        else{
+            //deleting inventory in DB
+            const deletedInventory = await inventoriesModel.findByIdAndDelete(id);
+    
+            res.status(200).json({
+                "success": true,
+                "message": "Inventory deleted successfully",
+                "inventory": deletedInventory
+            });
+        }
 
-        res.status(200).json({
-            "success": true,
-            "message": "Inventory deleted successfully",
-            "inventory": deletedInventory
-        });
     } catch (error) {
         console.log(error);
     }
 }
-

@@ -6,7 +6,7 @@ const { getStocks, addStocks, updateStocks, deleteStocks } = require('../control
 
 stocksRouter.get('/getStocks', auth, getStocks);
 stocksRouter.post('/addStocks', auth, addStocks);
-stocksRouter.put('/updateStocks', auth, updateStocks);
-stocksRouter.delete('/deleteStocks', auth, deleteStocks);
+stocksRouter.put('/updateStocks/:id', auth, updateStocks);
+stocksRouter.delete('/deleteStocks/:id', auth, deleteStocks);
 
 module.exports = stocksRouter;

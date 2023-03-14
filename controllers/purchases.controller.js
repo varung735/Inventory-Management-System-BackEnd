@@ -29,23 +29,25 @@ exports.addPurchases = async (req, res) => {
         if (!(purchase_name && type && amount && quantity && unit && purchased_from && date && added_by)) {
             res.status(400).send("All Fields are required");
         }
-
-        const addedPurchase = await purchasesModel.create({
-            purchase_name,
-            type, 
-            amount,
-            quantity,
-            unit,
-            purchased_from,
-            date,
-            added_by
-        });
-
-        res.status(200).json({
-            "success": true,
-            "message": "Added Purchase Successfully",
-            "Added Purchase": addedPurchase
-        });
+        else{
+            // adding purchase in DB
+            const addedPurchase = await purchasesModel.create({
+                purchase_name,
+                type, 
+                amount,
+                quantity,
+                unit,
+                purchased_from,
+                date,
+                added_by
+            });
+    
+            res.status(200).json({
+                "success": true,
+                "message": "Added Purchase Successfully",
+                "Added Purchase": addedPurchase
+            });
+        }
     } catch (error) {
         res.status(400).json({
             "success": false,
@@ -66,14 +68,17 @@ exports.updatePurchases = async (req, res) => {
         if(!purchase){
             res.status(400).send("Purchase doesn't exists");
         }
+        else{
+            //updating purchase in DB
+            const updatedPurchase = await purchasesModel.findByIdAndUpdate(id, req.body, {new: true});
+    
+            res.status(200).json({
+                "success": true,
+                "message": "Updated Purchase Successfully",
+                "updatedPurchase": updatedPurchase
+            });
+        }
 
-        const updatedPurchase = await purchasesModel.findByIdAndUpdate(id, req.body, {new: true});
-
-        res.status(200).json({
-            "success": true,
-            "message": "Updated Purchase Successfully",
-            "updatedPurchase": updatedPurchase
-        });
     } catch (error) {
         res.status(400).json({
             "success": false,

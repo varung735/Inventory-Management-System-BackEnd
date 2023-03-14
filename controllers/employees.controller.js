@@ -32,7 +32,13 @@ exports.login = async (req, res) => {
                 httpOnly: true
             }
 
-            res.status(200).cookie("token", token, options).json({ "success": true });
+            employee.password = undefined;
+
+            res.status(200).cookie("token", token, options).json({
+                 "success": true,
+                 "message": "User Logged In Successfully",
+                 "employee": employee 
+            });
         }
 
     } catch (error) {
@@ -79,35 +85,37 @@ exports.addEmployees = async (req, res) => {
         if (isExisting) {
             res.status(401).send("Employee already exists");
         }
+        else{
+            //encrypting password
+            const encryptedPassword = await bcrypt.hash(password, 10);
+    
+            //creating a new entry in DB
+            const newEmployee = await empModel.create({
+                emp_name,
+                designation,
+                address,
+                aadhar_no,
+                pan_no,
+                ac_no,
+                bank_name,
+                ifsc_code,
+                contact_no,
+                email,
+                hired_on,
+                emp_status,
+                role,
+                password: encryptedPassword
+            });
+    
+            newEmployee.password = undefined;
+    
+            res.status(200).json({
+                "success": true,
+                "message": "Employee added sucessfully",
+                "employee_data": newEmployee
+            });
+        }
 
-        //encrypting password
-        const encryptedPassword = await bcrypt.hash(password, 10);
-
-        //creating a new entry in DB
-        const newEmployee = await empModel.create({
-            emp_name,
-            designation,
-            address,
-            aadhar_no,
-            pan_no,
-            ac_no,
-            bank_name,
-            ifsc_code,
-            contact_no,
-            email,
-            hired_on,
-            emp_status,
-            role,
-            password: encryptedPassword
-        });
-
-        newEmployee.password = undefined;
-
-        res.status(200).json({
-            "success": true,
-            "message": "Employee added sucessfully",
-            "employee_data": newEmployee
-        });
     } catch (error) {
         res.status(400).json({
             "success": false,
@@ -128,14 +136,17 @@ exports.updateEmployees = async (req, res) => {
         if (!isExisting) {
             res.status(401).send("Employee doesn't exists");
         }
+        else{
+            //updating employee in DB
+            const updatedEmployee = await empModel.findByIdAndUpdate(id, req.body, {new: true});
+    
+            res.status(200).json({
+                "success": true,
+                "message": "Employee updated sucessfully",
+                "employee_data": updatedEmployee
+            });
+        }
 
-        const updatedEmployee = await empModel.findByIdAndUpdate(id, req.body, {new: true});
-
-        res.status(200).json({
-            "success": true,
-            "message": "Employee updated sucessfully",
-            "employee_data": updatedEmployee
-        });
     } catch (error) {
         res.status(400).json({
             "success": false,
@@ -156,14 +167,17 @@ exports.deleteEmployees = async (req, res) => {
         if (!isExisting) {
             res.status(401).send("Employee doesn't exists");
         }
+        else{
+            //deleting employee from DB
+            const deletedEmployee = await empModel.findByIdAndDelete(id);
+    
+            res.status(200).json({
+                "success": true,
+                "message": "Employee deleted successfully",
+                "employee": deletedEmployee
+            });
+        }
         
-        const deletedEmployee = await empModel.findByIdAndDelete(id);
-
-        res.status(200).json({
-            "success": true,
-            "message": "Employee deleted successfully",
-            "employee": deletedEmployee
-        });
     } catch (error) {
         res.status(400).json({
             "success": false,
