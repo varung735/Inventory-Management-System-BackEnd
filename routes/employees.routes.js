@@ -4,7 +4,7 @@ const {auth} = require('../middlewares/auth');
 
 const { addEmployees, login, updateEmployees, deleteEmployees, getEmployees } = require('../controllers/employees.controller');
 
-employeesRouter.get('/login', login);
+employeesRouter.post('/login', login);
 employeesRouter.get('/getEmployees', auth, getEmployees);
 employeesRouter.post('/addEmployee', auth, addEmployees);
 employeesRouter.put('/updateEmployee/:id', auth, updateEmployees);
