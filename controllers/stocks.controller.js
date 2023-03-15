@@ -63,7 +63,7 @@ exports.updateStocks = async (req, res) => {
         let id = req.params.id;
 
         //if stock exists or not
-        const stock = await stocksModel.find({ id: id });
+        const stock = await stocksModel.find({ _id: id });
         if (!stock) {
             res.status(400).send("Stock Doesn't exists");
         } 
@@ -95,7 +95,7 @@ exports.deleteStocks = async (req, res) => {
             let id = req.params.id;
 
             //if stock exists or not
-            const stock = await stocksModel.find({ id: id });
+            const stock = await stocksModel.find({ _id: id });
             if (!stock) {
                 res.status(400).send("Stock Doesn't exists");
             } 

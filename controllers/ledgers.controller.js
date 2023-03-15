@@ -13,7 +13,7 @@ exports.getLedgers = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             "success": false,
-            "message": "Cannpt Get Ledgers",
+            "message": "Cannot Get Ledgers",
             "error": error.message
         });
         console.log(error);
@@ -59,13 +59,13 @@ exports.updateLedgers = async (req, res) => {
         let id = req.params.id;
 
         //if ledger exists or not
-        const ledger = await ledgersModel.find({id: id});
+        const ledger = await ledgersModel.find({_id: id});
         if(!ledger){
             res.status(400).send("Ledger doesn't exists");
         }   
         else{
             //updating ledger in DB
-            const updatedLedger = await ledgersModel.findByIdAndUpdate(id, req.body, {new: true});
+            const updatedLedger = await ledgersModel.findByIdAndUpdate(id, req.body, { new: true });
 
             res.status(200).json({
                 "success": true,
@@ -73,7 +73,7 @@ exports.updateLedgers = async (req, res) => {
                 "updated_ledger": updatedLedger
             });
         }
-        
+
     } catch (error) {
         res.status(400).json({
             "success": false,
@@ -90,7 +90,7 @@ exports.deleteLedgers = async (req, res) => {
         let id = req.params.id;
 
         //if ledger exists or not
-        const ledger = await ledgersModel.find({id: id});
+        const ledger = await ledgersModel.find({ _id: id });
         if(!ledger){
             res.status(400).send("Ledger doesn't exists");
         }   

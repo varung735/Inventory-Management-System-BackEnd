@@ -63,7 +63,7 @@ exports.updateInventories = async (req, res) => {
         let id = req.params.id;
 
         //if inventory doesn't exists
-        const isExisting = await inventoriesModel.find({ id: id });
+        const isExisting = await inventoriesModel.find({ _id: id });
         if (!isExisting) {
             res.status(400).send("Inventory item doesn't exists");
         }
