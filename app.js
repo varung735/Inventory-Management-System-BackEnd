@@ -13,11 +13,24 @@ const expensesRouter = require('./routes/expenses.routes');
 const stocksRouter = require('./routes/stocks.routes');
 const ledgersRouter = require('./routes/ledgers.routes');
 
-app.use(cors());
-app.options('*', cors());
+const corsOptions = {
+    origin: "http://localhost:3000",
+    credentials: true
+}
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.set("trust proxy", 1);
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept', 'Set-Cookie');
+    next();
+  });
+  
 
 connectToDB();
 
