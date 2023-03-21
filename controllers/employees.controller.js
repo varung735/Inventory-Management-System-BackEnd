@@ -12,6 +12,7 @@ exports.login = async (req, res) => {
 
         if (!(email && password)) {
             res.status(401).send("email or password is invalid");
+            return;
         }
 
         //checking if employee exists or not
@@ -20,9 +21,10 @@ exports.login = async (req, res) => {
         // if employee doesn't exists
         if (!employee) {
             res.status(401).send("Employee dosn't exists");
+            return;
         }
 
-        if (employee && (bcrypt.compare(await password, employee.password))) {
+        if (employee && (await bcrypt.compare(password, employee.password))) {
 
             //create a token and send
             const token = jwt.sign({ id: employee._id }, JWT_SECRET_KEY, { expiresIn: '2h' });
@@ -41,6 +43,14 @@ exports.login = async (req, res) => {
                  "message": "User Logged In Successfully",
                  "employee": employee 
             });
+            return;
+        }
+        else{
+            res.status(400).json({
+                "success": false,
+                "message": "Invalid Email or Password"
+            });
+            return;
         }
 
     } catch (error) {
@@ -49,6 +59,29 @@ exports.login = async (req, res) => {
             "message": "cannot login",
             "error": error.message,
         });
+        console.log(error);
+    }
+}
+
+//for logging out the user
+exports.logout = async (req, res) => {
+
+    //We are clearing the cookies for now as we are using it for auth
+    //After logging out the user will not be able to send requests to the server
+    //As the server won't accept it without the token.
+    try{
+        res.status(200).clearCookie("token").json({
+            "success": true,
+            "message": "User Logged Out Successfully"
+        })
+    }
+    catch(error){
+        res.status(400).json({
+            "success": false,
+            "message": "Cannot Logout User",
+            "error": error.message
+        });
+        console.log(error);
     }
 }
 
@@ -66,6 +99,33 @@ exports.getEmployees = async (req, res) => {
         res.status(400).json({
             "success": false,
             "message": "Cannot get Employees",
+            "error": error.message
+        });
+        console.log(error);
+    }
+}
+
+//for getting the employee by the userId
+exports.getEmployeeById = async (req, res) => {
+    try {
+        let id = req.params.id;
+
+        //to check if the employee exists
+        const employee = await empModel.findById(id);
+        if(!employee){
+            res.status(400).send("Employee Doesn't exists");
+        }
+        else{
+            res.status(200).json({
+                "success": true,
+                "message": "Got Employee Successfully",
+                "employee": employee
+            });
+        }
+    } catch (error) {   
+        res.status(400).json({
+            "success": false,
+            "message": "Cannot get employees",
             "error": error.message
         });
         console.log(error);
