@@ -23,10 +23,10 @@ exports.getStocks = async (req, res) => {
 //to add stock to DB
 exports.addStocks = async (req, res) => {
     try {
-        let { stock_name, category, cost, available, date, added_by } = req.body;
+        let { stock_name, category, cost, available, unit, date, added_by } = req.body;
 
         //check if any of the fields missing
-        if (!(stock_name && category && cost && available && date && added_by)) {
+        if (!(stock_name && category && cost && available && unit && date && added_by)) {
             res.status(400).send("All Fields are neccessary");
         }
         else {
@@ -36,6 +36,7 @@ exports.addStocks = async (req, res) => {
                 category,
                 cost,
                 available,
+                unit,
                 date,
                 added_by
             });

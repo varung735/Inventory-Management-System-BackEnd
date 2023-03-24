@@ -17,6 +17,10 @@ const stocksSchema = new mongoose.Schema({
         type: Number,
         required: [true, "available is required."]
     },
+    unit: {
+        type: String,
+        required: [true, "unit is required"]
+    },
     date: {
         type: Date,
         required: [true, "date is required"],
