@@ -46,7 +46,7 @@ exports.addSales = async (req, res) => {
             res.status(200).json({
                 "success": true,
                 "message": "Added Sale Successfully",
-                "Sale": addedSale
+                "sale": addedSale
             });
         }
 
@@ -78,7 +78,7 @@ exports.updateSales = async (req, res) => {
             res.status(200).json({
                 "success": true,
                 "message": "updated sale successfully",
-                "Updated sale": updatedSale
+                "updated_sale": updatedSale
             });
         }
 
@@ -109,7 +109,7 @@ exports.deleteSales = async (req, res) => {
             res.status(200).json({
                 "success": true,
                 "message": "Deleted Sales Successfully",
-                "deleted sale": deletedSale
+                "deleted_sale": deletedSale
             });
         }
 
