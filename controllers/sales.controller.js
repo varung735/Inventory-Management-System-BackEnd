@@ -73,7 +73,7 @@ exports.updateSales = async (req, res) => {
         }
         else{
             //updating the entry in DB
-            const updatedSale = await salesModel.findByIdAndUpdate(id, req.body);
+            const updatedSale = await salesModel.findByIdAndUpdate(id, req.body, {new: true});
     
             res.status(200).json({
                 "success": true,
