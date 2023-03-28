@@ -43,7 +43,7 @@ exports.addInventories = async (req, res) => {
             res.status(200).json({
                 "success": true,
                 "message": "Inventory Created Successfully",
-                "Inventory": newInventory
+                "added_inventory": newInventory
             });
         }
 
@@ -74,7 +74,7 @@ exports.updateInventories = async (req, res) => {
             res.status(200).json({
                 "success": true,
                 "message": "updated inventory successfully",
-                "inventory": updatedInventory
+                "updated_inventory": updatedInventory
             });
         }
 

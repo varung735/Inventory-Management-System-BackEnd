@@ -45,7 +45,7 @@ exports.addPurchases = async (req, res) => {
             res.status(200).json({
                 "success": true,
                 "message": "Added Purchase Successfully",
-                "Added Purchase": addedPurchase
+                "purchase": addedPurchase
             });
         }
     } catch (error) {
@@ -75,7 +75,7 @@ exports.updatePurchases = async (req, res) => {
             res.status(200).json({
                 "success": true,
                 "message": "Updated Purchase Successfully",
-                "updatedPurchase": updatedPurchase
+                "updated_purchase": updatedPurchase
             });
         }
 
