@@ -12,6 +12,7 @@ const purchasesRouter = require('./routes/purchases.routes');
 const expensesRouter = require('./routes/expenses.routes');
 const stocksRouter = require('./routes/stocks.routes');
 const ledgersRouter = require('./routes/ledgers.routes');
+const salariesRouter = require('./routes/salaries.routes');
 
 const corsOptions = {
     origin: "http://localhost:3000",
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept', 'Set-Cookie');
     next();
-  });
+});
   
 
 connectToDB();
@@ -41,5 +42,6 @@ app.use('/purchases', purchasesRouter);
 app.use('/expenses', expensesRouter);
 app.use('/stocks', stocksRouter);
 app.use('/ledgers', ledgersRouter);
+app.use('/salaries', salariesRouter);
 
 module.exports = app;
