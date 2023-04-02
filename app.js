@@ -13,6 +13,7 @@ const expensesRouter = require('./routes/expenses.routes');
 const stocksRouter = require('./routes/stocks.routes');
 const ledgersRouter = require('./routes/ledgers.routes');
 const salariesRouter = require('./routes/salaries.routes');
+const entriesRouter = require('./routes/entries.router');
 
 const corsOptions = {
     origin: "http://localhost:3000",
@@ -43,5 +44,6 @@ app.use('/expenses', expensesRouter);
 app.use('/stocks', stocksRouter);
 app.use('/ledgers', ledgersRouter);
 app.use('/salaries', salariesRouter);
+app.use('/entries', entriesRouter);
 
 module.exports = app;
