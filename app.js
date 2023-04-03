@@ -43,7 +43,7 @@ app.use('/purchases', purchasesRouter);
 app.use('/expenses', expensesRouter);
 app.use('/stocks', stocksRouter);
 app.use('/ledgers', ledgersRouter);
-app.use('/salaries', salariesRouter);
-app.use('/entries', entriesRouter);
+app.use('/salaries', salariesRouter); // For manipulating the salary array inside employee model
+app.use('/entries', entriesRouter); // For manipulating the entries array inside ledger model
 
 module.exports = app;
