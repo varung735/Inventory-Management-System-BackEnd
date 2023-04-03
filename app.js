@@ -16,7 +16,7 @@ const salariesRouter = require('./routes/salaries.routes');
 const entriesRouter = require('./routes/entries.router');
 
 const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: "https://ims-frontend.netlify.app/",
     credentials: true
 }
 
