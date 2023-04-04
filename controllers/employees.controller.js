@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
                 expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
                 secure: true,
                 httpOnly: true,
-                sameSite: "lax"
+                sameSite: "strict"
             }
 
             employee.password = undefined;
