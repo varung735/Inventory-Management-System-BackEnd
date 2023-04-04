@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const REQ_URL = process.env.REQ_URL
 
 const employeesRouter = require('./routes/employees.routes');
 const inventoriesRouter = require('./routes/inventories.routes');
@@ -16,7 +17,7 @@ const salariesRouter = require('./routes/salaries.routes');
 const entriesRouter = require('./routes/entries.router');
 
 const corsOptions = {
-    origin: "https://ims-frontend.netlify.app",
+    origin: REQ_URL || "http://localhost:3000",
     credentials: true
 }
 
