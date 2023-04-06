@@ -3,7 +3,7 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 exports.auth = async (req,res,next) => {
     // to get the token from cookies
-    const token = req.token;
+    const token = req.cookies.token;
     console.log(token);
 
     // if the token's missing
