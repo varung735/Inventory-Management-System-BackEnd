@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
                 expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
                 secure: false,
                 httpOnly: true,
-                domain: 'https://ims-backend-3u4x.onrender.com',
+                domain: '.netlify.app',
                 sameSite: "none"
             }
 
