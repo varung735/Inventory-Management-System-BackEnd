@@ -77,7 +77,7 @@ exports.logout = async (req, res) => {
         let token = req.headers.token;
         token = undefined;
         
-        res.status(200).clearCookie("token").json({
+        res.status(200).json({
             "success": true,
             "message": "User Logged Out Successfully"
         })
