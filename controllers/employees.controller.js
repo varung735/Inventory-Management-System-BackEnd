@@ -74,6 +74,9 @@ exports.logout = async (req, res) => {
     //After logging out the user will not be able to send requests to the server
     //As the server won't accept it without the token.
     try{
+        let token = req.headers.token;
+        token = undefined;
+        
         res.status(200).clearCookie("token").json({
             "success": true,
             "message": "User Logged Out Successfully"
