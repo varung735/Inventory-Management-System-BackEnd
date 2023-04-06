@@ -17,7 +17,7 @@ const salariesRouter = require('./routes/salaries.routes');
 const entriesRouter = require('./routes/entries.router');
 
 const corsOptions = {
-    origin: REQ_URL || "http://localhost:3000",
+    origin: [REQ_URL, "http://localhost:3000"],
     credentials: true
 }
 
