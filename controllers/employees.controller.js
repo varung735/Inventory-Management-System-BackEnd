@@ -39,7 +39,9 @@ exports.login = async (req, res) => {
 
             employee.password = undefined;
 
-            res.status(200).cookie("token", token, options).json({
+            res.cookie("token", token, options);
+
+            res.status(200).json({
                  "success": true,
                  "message": "User Logged In Successfully",
                  "token": token,
