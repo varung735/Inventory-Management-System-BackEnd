@@ -7,16 +7,6 @@ const cors = require('cors');
 const app = express();
 const REQ_URL = config.env === 'PROD' ? config.prod_url : config.local_url;
 
-const employeesRouter = require('./routes/employees.routes');
-const inventoriesRouter = require('./routes/inventories.routes');
-const salesRouter = require('./routes/sales.routes');
-const purchasesRouter = require('./routes/purchases.routes');
-const expensesRouter = require('./routes/expenses.routes');
-const stocksRouter = require('./routes/stocks.routes');
-const ledgersRouter = require('./routes/ledgers.routes');
-const salariesRouter = require('./routes/salaries.routes');
-const entriesRouter = require('./routes/entries.router');
-
 const indexRouter = require('./src/index');
 
 const corsOptions = {
@@ -40,15 +30,5 @@ app.use(cookieParser());
 connectToDB();
 
 app.use('/api', indexRouter);
-
-app.use('/employees', employeesRouter);
-app.use('/inventories', inventoriesRouter);
-app.use('/sales', salesRouter);
-app.use('/purchases', purchasesRouter);
-app.use('/expenses', expensesRouter);
-app.use('/stocks', stocksRouter);
-app.use('/ledgers', ledgersRouter);
-app.use('/salaries', salariesRouter); // For manipulating the salary array inside employee model
-app.use('/entries', entriesRouter); // For manipulating the entries array inside ledger model
 
 module.exports = app;

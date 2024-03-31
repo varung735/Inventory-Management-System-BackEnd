@@ -113,19 +113,18 @@ step 4 - Encrypt the provided Password
 step 5 - use create query to create the new user document in users collection
 step 6 - send the newly created user as response
 
-@parameters - profilePicUrl, name, email, password, role
+@parameters - name, email, password, role
 
 @returns - User object
 */
 exports.AddUser = asyncHandler(async (req, res) => {
-    const { profilePicUrl, name, email, password, role } = req.body;
+    const { name, email, password, role } = req.body;
 
     if(!name || !email || !password || !role){
         throw new CustomError("One of the fields Missing", 404);
     }
 
     const user = await userModel.create({
-        profilePicUrl,
         name,
         email,
         password,
@@ -161,7 +160,15 @@ step 5 - send the updated document as response
 */
 exports.UpdateEmail = asyncHandler(async (req, res) => {
     const { email } = req.body;
+    const { _id } = req.user;
 
+    const user = await userModel.findById(_id);
+
+    if(user === null){
+        throw new CustomError('User not Found', 404);
+    }
+
+    
 });
 
 /*

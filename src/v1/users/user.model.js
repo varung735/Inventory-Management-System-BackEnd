@@ -7,10 +7,6 @@ const userStatus = require('../../utils/userStatus');
 
 const userSchema = new mongoose.Schema(
     {
-        profilePicUrl: {
-            type: String,
-            default: 'some-url'
-        },
         name: {
             type: String,
             required: [true, "Name is Required"]
