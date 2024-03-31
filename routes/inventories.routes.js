@@ -1,6 +1,6 @@
 const express = require('express');
 const inventoriesRouter = express.Router();
-const {auth} = require('../middlewares/auth');
+const {auth} = require('../src/middlewares/auth.middleware');
 
 const { addInventories, getInventories, updateInventories, deleteInventories } = require('../controllers/inventories.controller');
 

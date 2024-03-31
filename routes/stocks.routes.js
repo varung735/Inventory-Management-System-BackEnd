@@ -1,6 +1,6 @@
 const express = require('express');
 const stocksRouter = express.Router();
-const {auth} = require('../middlewares/auth');
+const {auth} = require('../src/middlewares/auth.middleware');
 
 const { getStocks, addStocks, updateStocks, deleteStocks } = require('../controllers/stocks.controller');
 

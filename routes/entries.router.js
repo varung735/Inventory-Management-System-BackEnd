@@ -1,6 +1,6 @@
 const express = require('express');
 const entriesRouter = express.Router();
-const {auth} = require('../middlewares/auth');
+const {auth} = require('../src/middlewares/auth.middleware');
 
 const { addEntry, updateEntry, deleteEntry } = require('../controllers/entries.controller');
 

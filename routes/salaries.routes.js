@@ -1,6 +1,6 @@
 const express = require('express');
 const salariesRouter =  express.Router();
-const {auth} = require('../middlewares/auth');
+const {auth} = require('../src/middlewares/auth.middleware');
 
 const { getSalaries, getSalary, updateSalary, addSalary, deleteSalary } = require('../controllers/salaries.controllers');
 

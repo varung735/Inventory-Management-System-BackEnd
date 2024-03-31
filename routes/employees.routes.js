@@ -1,6 +1,6 @@
 const express = require('express');
 const employeesRouter = express.Router();
-const {auth} = require('../middlewares/auth');
+const {auth} = require('../src/middlewares/auth.middleware');
 
 const { addEmployees, login, updateEmployees, deleteEmployees, getEmployees, logout, getEmployeeById } = require('../controllers/employees.controller');
 

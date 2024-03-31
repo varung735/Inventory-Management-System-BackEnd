@@ -1,6 +1,6 @@
 const express = require('express');
 const purchasesRouter = express.Router();
-const {auth} = require('../middlewares/auth');
+const {auth} = require('../src/middlewares/auth.middleware');
 
 const { getPurchases, addPurchases, updatePurchases, deletePurchases } = require('../controllers/purchases.controller');
 

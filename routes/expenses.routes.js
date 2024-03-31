@@ -1,6 +1,6 @@
 const express = require('express');
 const expensesRouter = express.Router();
-const {auth} = require('../middlewares/auth');
+const {auth} = require('../src/middlewares/auth.middleware');
 
 const { getExpenses, addExpenses, updateExpenses, deleteExpenses } = require('../controllers/expenses.controller');
 

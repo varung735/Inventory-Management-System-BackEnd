@@ -1,6 +1,6 @@
 const express = require('express');
 const ledgersRouter = express.Router();
-const {auth} = require('../middlewares/auth');
+const {auth} = require('../src/middlewares/auth.middleware');
 
 const { getLedgers, addLedgers, updateLedgers, deleteLedgers } = require('../controllers/ledgers.controller');
 
