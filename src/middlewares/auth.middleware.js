@@ -3,6 +3,7 @@ const config = require('../config/enviornment.config');
 const CustomError = require('../utils/customError');
 const errorMessages = require('../utils/errorMessages');
 const asyncHandler = require('../utils/asyncHandler');
+const userAccess = require('../utils/userAccess');
 
 const auth = asyncHandler(async (req, res, next) => {
     let token;
@@ -18,6 +19,10 @@ const auth = asyncHandler(async (req, res, next) => {
     try {
         const decodedToken = jwt.verify(token, config.jwt_secret);
         req.user = decodedToken;
+
+        if(req.user.access === userAccess.revoked){
+            throw new CustomError('Your access has been revoked', 403);
+        }
 
         next();
     } catch (error) {

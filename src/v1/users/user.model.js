@@ -3,7 +3,9 @@ const bcrypt = require('bcryptjs');
 const roles = require('../../utils/userRoles');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/enviornment.config');
-const userStatus = require('../../utils/userStatus');
+const userAccess = require('../../utils/userAccess');
+const generateRandomChars = require('../../services/generateRandomChars');
+const generateRandomDigits = require('../../services/generateRandomDigits');
 
 const userSchema = new mongoose.Schema(
     {
@@ -21,6 +23,10 @@ const userSchema = new mongoose.Schema(
             required: [true, "Email is Required"],
             unique: [true, "Email already exists"]
         },
+        isEmailVerified: {
+            type: Boolean,
+            default: false
+        },
         password: {
             type: String,
             required: [true, "Password is Required"],
@@ -31,15 +37,16 @@ const userSchema = new mongoose.Schema(
             enum: Object.values(roles),
             default: roles.employee
         },
-        status: {
+        access: {
             type: String,
-            enum: Object.values(userStatus),
-            default: userStatus.active
+            enum: Object.values(userAccess),
+            default: userAccess.granted
         },
         forgetPasswordToken: String,
         forgetPasswordExpiry: Date,
         verifyEmailToken: String,
-        verifyEmailExpiry: Date
+        verifyEmailExpiry: Date,
+        verifyEmailOtp: Number
     },
     {
         timestamps: true
@@ -54,7 +61,7 @@ userSchema.pre('save', async function(next) {
 });
 
 userSchema.methods = {
-    comaparePassword: async function(enteredPassword) {
+    comparePassword: async function(enteredPassword) {
         return await bcrypt.compare(enteredPassword, this.password);
     },
     generateJwtToken: async function() {
@@ -63,7 +70,8 @@ userSchema.methods = {
                 _id: this._id,
                 email: this.email,
                 role: this.role,
-                status: this.status
+                access: this.access,
+                isEmailVerified: this.isEmailVerified
             },
             config.jwt_secret,
             {
@@ -71,7 +79,29 @@ userSchema.methods = {
             }
         )
     },
-    
+    generateForgetPassToken: function() {
+        const forgetPassToken = generateRandomChars(20);
+
+        this.forgetPasswordToken = forgetPassToken;
+        this.forgetPasswordExpiry = Date.now() + 5 * 60 * 1000;
+
+        return forgetPassToken;
+    },
+    generateVerifyEmailToken: function() {
+        const token = generateRandomChars(20);
+
+        this.verifyEmailToken = token;
+        this.verifyEmailExpiry = Date.now() + 5 *60 * 1000;
+
+        return token;
+    },
+    generateVerifyEmailOtp: function() {
+        const verifyEmailOtp = generateRandomDigits(6);
+
+        this.verifyEmailOtp = verifyEmailOtp;
+
+        return verifyEmailOtp;
+    }
 }
 
 module.exports = mongoose.model('User', userSchema);
