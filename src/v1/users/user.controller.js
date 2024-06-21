@@ -340,19 +340,11 @@ exports.ForgetPassword = asyncHandler(async (req, res) => {
 
     await user.save();
 
-    const link = `${config.env === 'PROD' ? config.prod_url : config.local_url}/api/v1/users/reset/password?token=${token}`;
-    const text = `Click on this link ${link} to change your password`;
-
     try {
-        await sendMail({
-            email: email,
-            subject: 'Reset Password Link',
-            text
-        });
-
         res.status(200).json({
             success: true,
-            message: 'Password Reset Link Sent Successfully'
+            message: 'Password Reset Token Sent Successfully',
+            token
         });
     } catch (error) {
         user.forgetPasswordToken = undefined;
@@ -360,7 +352,7 @@ exports.ForgetPassword = asyncHandler(async (req, res) => {
 
         await user.save({ validateBeforeSave: false });
 
-        console.log(consoleFont.error(error.message));
+        console.log(errorMessages.error(error.message));
         throw new CustomError('Cannot Send Forget Password Link', 500);
     }
 })
