@@ -8,7 +8,7 @@ const userRouter = express.Router();
 userRouter.post('/login', LoginUser);
 userRouter.get('/get', auth, checkUserRole, GetUsers);
 userRouter.post('/add', auth, checkUserRole, AddUser);
-userRouter.get('/send/verification_link', auth, SendEmailVerificationLink);
+userRouter.get('/send/verification_link', SendEmailVerificationLink);
 userRouter.get('/forget/password', ForgetPassword);
 userRouter.patch('/verify/email', auth, VerifyEmail);
 userRouter.patch('/update/email', auth, checkUserRole, UpdateEmail);

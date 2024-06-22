@@ -183,7 +183,7 @@ exports.SendEmailVerificationLink = asyncHandler(async (req, res) => {
 
     await user.save();
     
-    const link = `${config.env === 'PROD' ? config.prod_url : config.local_url}/api/v1/users/verify/email?token=${token}`;
+    const link = `${config.env === 'PROD' ? config.prod_url : config.local_url}/verify/email?token=${token}`;
     const text = `Click on this link ${link} \n and \nEnter This Otp to verify your email: ${otp}`;
     
     try {
@@ -337,14 +337,23 @@ exports.ForgetPassword = asyncHandler(async (req, res) => {
     }
 
     const token = user.generateForgetPassToken();
+    const otp = user.generateForgetPassOtp();
 
     await user.save();
 
+    const link = `${config.env === 'PROD' ? config.prod_url : config.local_url}/reset/password?token=${token}`;
+    const text = `Click on this link ${link} \n and \nEnter This Otp to verify your email: ${otp}`;
+
     try {
+        await sendMail({
+            email: email,
+            subject: 'Reset Password - IMS System',
+            text
+        });
+
         res.status(200).json({
             success: true,
-            message: 'Password Reset Token Sent Successfully',
-            token
+            message: 'Password Reset Link Sent Successfully'
         });
     } catch (error) {
         user.forgetPasswordToken = undefined;
@@ -373,7 +382,7 @@ prod - https://ims-backend.render.app/api/v1/users/reset/password
 @returns - 
 */
 exports.ResetPassword = asyncHandler(async (req, res) => {
-    const { token } = req.query;
+    const { token, otp } = req.query;
     const { password } = req.body;
 
     if(!password) {
@@ -390,7 +399,11 @@ exports.ResetPassword = asyncHandler(async (req, res) => {
     });
 
     if(user === null) {
-        throw new CustomError('Token Invalid or Expired', 404);
+        throw new CustomError('Token Invalid or Expired', 403);
+    }
+
+    if(parseInt(otp) !== user.forgetPasswordOtp) {
+        throw new CustomError('OTP Invalid', 403)
     }
 
     user.password = password;

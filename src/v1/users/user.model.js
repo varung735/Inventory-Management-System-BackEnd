@@ -44,6 +44,7 @@ const userSchema = new mongoose.Schema(
         },
         forgetPasswordToken: String,
         forgetPasswordExpiry: Date,
+        forgetPasswordOtp: Number,
         verifyEmailToken: String,
         verifyEmailExpiry: Date,
         verifyEmailOtp: Number
@@ -101,6 +102,13 @@ userSchema.methods = {
         this.verifyEmailOtp = verifyEmailOtp;
 
         return verifyEmailOtp;
+    },
+    generateForgetPassOtp: function() {
+        const forgetPassOtp = generateRandomDigits(6);
+
+        this.forgetPasswordOtp = forgetPassOtp;
+
+        return forgetPassOtp;
     }
 }
 
