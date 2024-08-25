@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const units = require('../../utils/quantityUnits');
 
 const stockSchema = new mongoose.Schema(
     {
@@ -9,6 +10,11 @@ const stockSchema = new mongoose.Schema(
         quantity: {
             type: Number,
             required: [true, 'Quantity is required']
+        },
+        unit: {
+            type: String,
+            required: [true, 'Unit is Required'],
+            enum: Object.values(units)
         },
         cost_price: {
             type: Number,

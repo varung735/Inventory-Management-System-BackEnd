@@ -1,7 +1,8 @@
 const roles = {
     admin: "ADMIN",
     sub_admin: "SUB-ADMIN",
-    employee: "EMPLOYEE"
+    inventory: "INVENTORY-MANAGER",
+    cashier: "CASHIER"
 };
 
 module.exports = roles;

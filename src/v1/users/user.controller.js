@@ -6,8 +6,6 @@ const userAccess = require('../../utils/userAccess');
 const sendMail = require('../../services/sendEmail');
 const errorMessages = require('../../utils/errorMessages');
 const config = require('../../config/enviornment.config');
-const { success } = require('../../utils/consoleFonts');
-const consoleFont = require('../../utils/consoleFonts');
 
 /*
 @LoginUser
@@ -93,7 +91,7 @@ step 2 - send the received users object array through the response
 @returns - users object array
 */
 exports.GetUsers = asyncHandler(async (req, res) => {
-    const users = await userModel.find();
+    const users = await userModel.find().select('name username email role access');
 
     res.status(200).json({
         success: true,
